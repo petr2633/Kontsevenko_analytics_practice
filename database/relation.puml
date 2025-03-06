@@ -1,0 +1,63 @@
+@startuml
+
+!define PRIMARY_KEY(x) <b>x</b>
+!define FOREIGN_KEY(x) <i>x</i>
+
+entity Order {
+    PRIMARY_KEY(order_id) INT
+    FOREIGN_KEY(user_id) INT
+    total_price DECIMAL
+    order_date DATETIME
+    status VARCHAR
+    shipping_address TEXT
+}
+
+entity User {
+    PRIMARY_KEY(user_id) INT
+    name VARCHAR
+    email VARCHAR
+    password VARCHAR
+    phone_number VARCHAR
+    account_type VARCHAR
+}
+
+entity Product {
+    PRIMARY_KEY(product_id) INT
+    name VARCHAR
+    description TEXT
+    price DECIMAL
+    stock_quantity INT
+    FOREIGN_KEY(category_id) INT
+}
+
+entity Category {
+    PRIMARY_KEY(category_id) INT
+    name VARCHAR
+    description TEXT
+}
+
+entity OrderDetails {
+    PRIMARY_KEY(id) INT
+    FOREIGN_KEY(order_id) INT
+    FOREIGN_KEY(product_id) INT
+    amount INT
+    unit_price DECIMAL
+}
+
+entity Payment {
+    PRIMARY_KEY(payment_id) INT
+    FOREIGN_KEY(order_id) INT
+    amount DECIMAL
+    status VARCHAR
+    payment_method VARCHAR
+    transaction_id VARCHAR
+    payment_date DATETIME
+}
+
+User ||--o{ Order
+Order ||--o{ OrderDetails  
+Product ||--o{ OrderDetails
+Order ||--|| Payment
+Category ||--o{ Product
+
+@enduml

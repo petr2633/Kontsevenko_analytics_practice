@@ -1,0 +1,73 @@
+@startuml
+
+entity User {
+    * user_id: ObjectId
+    * name: String
+    * email: String
+    * password: String
+    * phone_number String
+    * account_type String
+    * order: Object
+}
+
+entity  User_order_address {
+    * country: String
+    * region: String
+    * street: String
+    * house_number: Integer
+    * apartment_number: Integer
+}
+
+entity User_order {
+    * order_id: ObjectId
+    * user_id: ObjectId
+    * total_price: Decimal
+    * order_date: Date
+    * status: String
+    * address: Object
+    * cart: Object
+    * payment: Object
+}
+
+entity ListOfProducts {
+    * product_id: ObjectId
+    * name: String
+    * description: String
+    * price: Decimal
+    * stock_quantity: Integer
+    * category: Object
+}
+
+entity User_order_cart {
+    * products <ListOfProducts>: Array
+    * amount: Integer
+    * unit_price: Decimal
+    * subtotal: Decimal
+}
+
+entity User_order_payment {
+    * payment_id: ObjectId
+    * order_id: ObjectId
+    * amount: Decimal
+    * status: String
+    * payment_method: String
+    * transaction_id: String
+    * payment_date: Date
+}
+
+entity ListOfProducts_category {
+    * _id: ObjectId
+    * name: String
+    * description: String
+}
+
+
+User ||--o{ User_order
+User_order ||--|| User_order_address
+User_order ||--|| User_order_cart
+User_order_cart ||--o{ ListOfProducts
+User_order ||--|| User_order_payment
+ListOfProducts_category ||--|{ ListOfProducts
+
+
+@enduml
