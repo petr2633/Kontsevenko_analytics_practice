@@ -3,7 +3,7 @@
 
 Person(personAlias, "Клиент", "Заказывает товары через систему")
 Person(personAlias1, "Продавец", "Продает товары клиенту")
-Person(personAlias2, "Администратор", "Проверка на выполнение условий Leroy Merlin")
+Person(personAlias2, "Администратор", "Проверка на выполнение условий Leroy Merlin.")
 
 System_Boundary(systemAlias, "Система заказа товара") {
     Container(mobile, "Мобильное приложение", "Kotlin", "Предоставляет пользователям доступ к мобильному приложению")
