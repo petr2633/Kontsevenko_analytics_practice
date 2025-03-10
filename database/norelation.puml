@@ -7,10 +7,10 @@ entity User {
     * password: String
     * phone_number String
     * account_type String
-    * order: Object
+    * orders <ListOfOrders>: Array
 }
 
-entity  User_order_address {
+entity  ListOfOrders_address {
     * country: String
     * region: String
     * street: String
@@ -18,7 +18,7 @@ entity  User_order_address {
     * apartment_number: Integer
 }
 
-entity User_order {
+entity ListOfOrders {
     * order_id: ObjectId
     * user_id: ObjectId
     * total_price: Decimal
@@ -38,14 +38,14 @@ entity ListOfProducts {
     * category: Object
 }
 
-entity User_order_cart {
+entity ListOfOrders_cart {
     * products <ListOfProducts>: Array
     * amount: Integer
     * unit_price: Decimal
     * subtotal: Decimal
 }
 
-entity User_order_payment {
+entity ListOfOrders_payment {
     * payment_id: ObjectId
     * order_id: ObjectId
     * amount: Decimal
@@ -62,11 +62,11 @@ entity ListOfProducts_category {
 }
 
 
-User ||--o{ User_order
-User_order ||--|| User_order_address
-User_order ||--|| User_order_cart
-User_order_cart ||--o{ ListOfProducts
-User_order ||--|| User_order_payment
+User ||--o{ ListOfOrders
+ListOfOrders ||--|| ListOfOrders_address
+ListOfOrders ||--|| ListOfOrders_cart
+ListOfOrders_cart ||--o{ ListOfProducts
+ListOfOrders ||--|| ListOfOrders_payment
 ListOfProducts_category ||--|{ ListOfProducts
 
 
