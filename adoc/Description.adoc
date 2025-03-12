@@ -57,5 +57,103 @@ image::../svg/C4_Context.svg[]
 
 image::../svg/C4_Container.svg[]
 
+== Описание топиков
 
+**Название топика**: order.status.event
 
+**Описание очереди**: Очередь, в которую отправляем информацию об изменение статуса заказа
+
+=== Структура данных для статусов заказов
+
+[options="header"]
+|===
+| Название параметра | Тип    | Обязательность | Описание
+| orderId           | int | true          | Идентификатор заказа
+| oldStatus        | string | true          | Предыдущий статус
+| newStatus        | string | true          | Новый (текущий) статус
+| updatedDate      | string | true          | Дата обновления
+|===
+
+=== JSON:
+
+[source,lang]
+----
+{
+   "orderId": "1234565",
+   "oldStatus": "unpaid",
+   "newStatus": "paid",
+   "updatedDate": "2025-03-11"
+}
+----
+
+___
+
+**Название топика**: inventory.addProducts.event
+
+**Описание очереди**: Очередь, в которую отправляем информацию об добавленных товарах на склад
+
+=== Структура данных для добавления товара на склад
+
+[options="header"]
+|===
+| Название параметра | Тип    | Обязательность | Описание
+| location_id           | int | true          | Идентификатор склада
+| product_id           | int | true          | Идентификатор товара
+| amount        | int | true          | Количетсво товара
+| unit_price      | float | true          | Цена за единицу товара
+| timestamp      | string | true          | Время добавления товара
+|===
+
+=== AVRO:
+
+[source,lang]
+----
+{
+  "type": "record",
+  "name": "inventory.addProducts.event",
+  "fields": [
+    {"name": "location_id", "type": "int"},
+    {"name": "product_id", "type": "int"},
+    {"name": "amount", "type": "int"},
+    {"name": "unit_price", "type": "float"},
+    {"name": "timestamp", "type": "string"}
+  ]
+}
+----
+
+___
+
+**Название топика**: return.products.event
+
+**Описание очереди**: Очередь, в которую отправляем информацию об возврате товара
+
+=== Структура данных для статусов заказов
+
+[options="header"]
+|===
+| Название параметра | Тип    | Обязательность | Описание
+| order_id           | int | true          | Идентификатор заказа
+| product_id           | int | true          | Идентификатор товара
+| amount        | int | true          | Количество возвращаемого товара
+| reason        | string | true          | Причина возврата
+| status      | string | true          | Текущий статус возврата
+| timestamp      | string | true          | Время события
+| employee_id      | string | false          | ID сотрудника, обработавшего возврат
+|===
+
+=== PROTOBUF:
+
+[source,lang]
+----
+syntax = "proto3";
+
+message return.products.event {
+  string order_id = 1; 
+  int32 product_id = 2;
+  int32 amount = 3;     
+  string reason = 4;          
+  string status = 5;          
+  string timestamp = 6;       
+  optional int32 employee_id = 7; 
+}
+----
