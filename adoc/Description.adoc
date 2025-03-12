@@ -59,7 +59,7 @@ image::../svg/C4_Container.svg[]
 
 == Описание топиков
 
-**Название топика**: order.status.event
+**Название топика**: Change_Order_Status
 
 **Описание очереди**: Очередь, в которую отправляем информацию об изменение статуса заказа
 
@@ -88,7 +88,7 @@ image::../svg/C4_Container.svg[]
 
 ___
 
-**Название топика**: inventory.addProducts.event
+**Название топика**: Inventory_addProducts
 
 **Описание очереди**: Очередь, в которую отправляем информацию об добавленных товарах на склад
 
@@ -110,7 +110,7 @@ ___
 ----
 {
   "type": "record",
-  "name": "inventory.addProducts.event",
+  "name": "Inventory_addProducts",
   "fields": [
     {"name": "location_id", "type": "int"},
     {"name": "product_id", "type": "int"},
@@ -123,23 +123,32 @@ ___
 
 ___
 
-**Название топика**: return.products.event
+**Название топика**: Return_Product
 
 **Описание очереди**: Очередь, в которую отправляем информацию об возврате товара
 
-=== Структура данных для статусов заказов
+=== Структура данных для возврата заказов
 
 [options="header"]
 |===
 | Название параметра | Тип    | Обязательность | Описание
 | order_id           | int | true          | Идентификатор заказа
-| product_id           | int | true          | Идентификатор товара
-| amount        | int | true          | Количество возвращаемого товара
-| reason        | string | true          | Причина возврата
+| Product           | array | true          | Массив товаров
 | status      | string | true          | Текущий статус возврата
 | timestamp      | string | true          | Время события
 | employee_id      | string | false          | ID сотрудника, обработавшего возврат
 |===
+
+=== Структура данных для массива товаров
+
+[options="header"]
+|===
+| Название параметра | Тип    | Обязательность | Описание
+| product_id           | int | true          | Идентификатор товара
+| amount        | int | true          | Количество возвращаемого товара
+| reason        | string | true          | Причина возврата
+|===
+
 
 === PROTOBUF:
 
@@ -147,13 +156,17 @@ ___
 ----
 syntax = "proto3";
 
-message return.products.event {
+message Return_Product {
   string order_id = 1; 
-  int32 product_id = 2;
-  int32 amount = 3;     
-  string reason = 4;          
-  string status = 5;          
-  string timestamp = 6;       
-  optional int32 employee_id = 7; 
+  repeated Product products = 2       
+  string status = 3;          
+  string timestamp = 4;       
+  optional int32 employee_id = 5; 
+}
+
+message Product {
+   int32 product_id = 1;
+   int32 amount = 2;     
+   string reason = 3;  
 }
 ----
