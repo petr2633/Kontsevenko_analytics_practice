@@ -59,7 +59,7 @@ image::../svg/C4_Container.svg[]
 
 == Описание топиков
 
-**Название топика**: Change_Order_Status
+**Название топика**: orders.status.changed
 
 **Описание очереди**: Очередь, в которую отправляем информацию об изменение статуса заказа
 
@@ -88,7 +88,7 @@ image::../svg/C4_Container.svg[]
 
 ___
 
-**Название топика**: Inventory_addProducts
+**Название топика**: inventory.items.added
 
 **Описание очереди**: Очередь, в которую отправляем информацию об добавленных товарах на склад
 
@@ -110,7 +110,7 @@ ___
 ----
 {
   "type": "record",
-  "name": "Inventory_addProducts",
+  "name": "inventory.items.added",
   "fields": [
     {"name": "location_id", "type": "int"},
     {"name": "product_id", "type": "int"},
@@ -123,7 +123,7 @@ ___
 
 ___
 
-**Название топика**: Return_Product
+**Название топика**: orders.products.returned
 
 **Описание очереди**: Очередь, в которую отправляем информацию об возврате товара
 
